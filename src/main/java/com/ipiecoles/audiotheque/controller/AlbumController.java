@@ -9,20 +9,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
 
+@RestController
+@RequestMapping(value = "/albums")
 public class AlbumController {
     @Autowired
     private AlbumRepository albumRepository;
     @RequestMapping(
             method = RequestMethod.POST,
-            value = "albums/detail/new",
+            value = "detail/new",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.CREATED)
-    public Album createArtist(
+    public Album createAlbum(
             @RequestBody Album album
     ){
-        //Artiste existe déjà (id, matricule existant) => 409 CONFLICT
+        //Album existe déjà (id, matricule existant) => 409 CONFLICT
         if(album.getId() != null && albumRepository.existsById(album.getId())){
             throw new EntityExistsException("Il existe déjà un artiste identique en base");
         }
@@ -34,13 +36,13 @@ public class AlbumController {
             return albumRepository.save(album);
         }
         catch(Exception e){
-            throw new IllegalArgumentException("Problème lors de la sauvegarde de l'artiste");
+            throw new IllegalArgumentException("Problème lors de la sauvegarde de l'album");
         }
     }
 
     @RequestMapping(
             method = RequestMethod.DELETE,
-            value = "{id}"
+            value = "/{id}"
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteArtist(

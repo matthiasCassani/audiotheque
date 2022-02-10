@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/artists")
 public class ArtistController {
     @Autowired
     private ArtistRepository artistRepository;
@@ -38,7 +39,7 @@ public class ArtistController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/artists",
+            value = "",
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "name"
     )
@@ -54,13 +55,13 @@ public class ArtistController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/artists",
+            value = "",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Page<Artist> listArtists(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(defaultValue = "matricule") String sortProperty,
+            @RequestParam(defaultValue = "name") String sortProperty,
             @RequestParam(defaultValue = "ASC") Sort.Direction sortDirection
     ){
         if(page < 0 || size <= 0){
@@ -85,7 +86,7 @@ public class ArtistController {
 
     @RequestMapping(
             method = RequestMethod.POST,
-            value = "artists/detail/new",
+            value = "detail/new",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
@@ -119,7 +120,7 @@ public class ArtistController {
 
     @RequestMapping(
             method = RequestMethod.DELETE,
-            value = "{id}"
+            value = "/{id}"
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteArtist(
