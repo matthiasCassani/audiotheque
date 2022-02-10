@@ -45,9 +45,9 @@ public class ArtistController {
     public Artist findArtistByName(
             @RequestParam String name
     ){
-        Artist employe = artistRepository.findArtistByName(name);
-        if(employe != null){
-            return employe;
+        Artist artist = artistRepository.findArtistByName(name);
+        if(artist != null){
+            return artist;
         }
         throw new EntityNotFoundException("L'artiste se nommant " + name + " n'a pas été trouvé !");
     }
@@ -66,7 +66,7 @@ public class ArtistController {
         if(page < 0 || size <= 0){
             throw new IllegalArgumentException("La page et la taille doivent être positifs !");
         }
-        //sortProperty n'est pas un attribut d'Employé => 400 BAD REQUEST
+        //sortProperty n'est pas un attribut d'artiste => 400 BAD REQUEST
         List<String> properties = Arrays.asList("id", "name");
         if(!properties.contains(sortProperty)){
             throw new IllegalArgumentException("La propriété de tri " + sortProperty + " est incorrecte !");
